@@ -1,0 +1,64 @@
+<%- include("partials/header.ejs") -%>
+<div class="outer">
+  <div class="flexbox-1">
+    <div class="item-1 flex-item1">
+      <h4>Feedback</h4>
+      <p>feedback board</p>
+    </div>
+    <div class="item-2 flex-item1">
+      <div class="row-1">
+        <a href="/filter/ALL" class="btn shaodow-none" type="button" name="button">ALL</a>
+        <a href="/filter/UI" class="btn shaodow-none" type="button" name="button">UI</a>
+        <a href="/filter/UX" class="btn shaodow-none" type="button" name="button">UX</a>
+      </div>
+      <div class="row-2">
+        <a href="/filter/Enhancement" class="btn shaodow-none" type="button" name="button">Enhancement</a>
+        <a href="/filter/Bug" class="btn shaodow-none" type="button" name="button">Bug</a>
+      </div>
+      <div class="row-3">
+        <a href="/filter/Feature" class="btn shaodow-none" type="button" name="button">Feature</a>
+      </div>
+    </div>
+  </div>
+  <div class="flexbox-2">
+    <div class="item-one flex-items">
+      <div class="sugg">
+        <h4> Suggestions</h4>
+      </div>
+      <div class="sort">
+        <form class="" action="/filte" method="post">
+          <label for="">Sort by:</label>
+          <select class="Most" name="filter" onchange="javascript:this.form.submit()">
+            <option value="0">All</option>
+            <option value="1">Most Comments</option>
+            <option value="2">Most Upvotes</option>
+          </select>
+        </form>
+      </div>
+      <div class="button">
+        <a href="/feed" class="btn btn-2" type="button" name="button">+ Add Feedback</a>
+      </div>
+    </div>
+    <!-- for each loop -->
+  <%  feedbacks.forEach(function(feedback) { %>
+      <div class="item-two flex-items">
+        <div class="uptick">
+          <a href="/uptick/<%= feedback._id %>" class="btn shaodow-none" type="button" name="button"><i class="fas fa-chevron-up"></i> <br> <%=feedback.uptick%></a>
+        </div>
+        <div class="text">
+          <h4><%=feedback.title%></h4>
+          <p><%=feedback.desc%></p>
+          <button class="btn shaodow-none" type="button" name="button"><%=feedback.filter%></button>
+        </div>
+        <div class="comment">
+          <a href="/comments/<%= feedback._id %>"><i class="fas fa-comment"></i><%=feedback.ncomments%></a>
+        </div>
+      </div>
+<%    }) %>
+  </div>
+</div>
+
+
+
+
+<%- include("partials/footer.ejs") -%>

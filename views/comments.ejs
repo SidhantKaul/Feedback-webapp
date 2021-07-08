@@ -1,0 +1,61 @@
+<%- include("partials/header.ejs") -%>
+<div class="item-two comment-head">
+  <div class="uptick">
+    <a href="/uptick/<%= feedback._id %>" class="btn shaodow-none" type="button" name="button"><i class="fas fa-chevron-up"></i> <br> <%=feedback.uptick%></a>
+  </div>
+  <div class="text">
+    <h4><%=feedback.title%></h4>
+    <p><%=feedback.desc%></p>
+    <button class="btn shaodow-none" type="button" name="button"><%=feedback.filter%></button>
+  </div>
+  <div class="comment">
+    <a href="#"><i class="fas fa-comment"></i><%=feedback.ncomments%></a>
+  </div>
+</div>
+<div class="flexbox-3">
+<%  feedback.comments.forEach(function(comment) { %>
+    <div class="flex-item3">
+      <div class="flex-item3-outer">
+        <div class="comment-img">
+          <img class="comments" src="https://i.pinimg.com/originals/ce/d4/e1/ced4e117b0f2f490c79e9e820d14cd99.jpg" alt="">
+        </div>
+        <div class="texts">
+          <h4>username</h4>
+          <p>userid</p>
+          <p><%= comment.comment %></p>
+        </div>
+        <div class="reply">
+          <a href="/reply/<%= feedback._id %>@<%= comment._id %>">Reply</a>
+        </div>
+      </div>
+      <!-- foreach for reply -->
+    <%  comment.replies.forEach(function(reply) { %>
+        <div class="reply-item3">
+          <div class="comment-img">
+            <img class="comments" src="https://i.pinimg.com/originals/ce/d4/e1/ced4e117b0f2f490c79e9e820d14cd99.jpg" alt="">
+          </div>
+          <div class="texts">
+            <h4>username</h4>
+            <p>userid</p>
+            <p><%= reply.reply %></p>
+          </div>
+          <div class="reply-reply">
+            <a href="/reply/<%= feedback._id %>@<%= comment._id %>@<%= reply.userid %>">Reply</a>
+          </div>
+        </div>
+  <%    }); %>
+    </div>
+<%  }); %>
+</div>
+<div class="add-comment">
+  <h4>Add comment</h4>
+  <form class="" action="/postcomment/<%= feedback._id %>@<%= comment_id %>" method="post">
+    <div class="mb-3">
+      <input type="text" class="form-control" name="comment" id="exampleFormControlInput1" value="<%=reply%>" placeholder="Type comment">
+    </div>
+      <div class="button-com">
+        <button  class="btn btn-2" type="submit" name="button">Post comment</button>
+      </div>
+  </form>
+</div>
+<%- include("partials/footer.ejs") -%>
