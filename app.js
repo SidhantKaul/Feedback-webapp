@@ -21,17 +21,24 @@ app.use(passport.initialize());
 app.use(passport.session());
 mongoose.connect('mongodb://localhost:27017/FeedbackDB', {useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex:true});
 const {Schema} = mongoose;
+const userSchema = new Schema({
+  email: String,
+  name:String,
+  password: String,
+  googleId: String,
+  img:String
+});
 const replySchema = new Schema({
   username:String,
   userid:String,
   reply:String,
-  user:String
+  img:String
 });
 const commentSchema = new Schema({
   username:String,
   userid:String,
   comment:String,
-  user:String,
+  img:String,
   replies:[replySchema]
 });
 const feedbackSchema = new Schema({
@@ -42,8 +49,8 @@ const feedbackSchema = new Schema({
   ncomments:Number,
   comments:[commentSchema]
 });
-feedbackSchema.plugin(findOrCreate);
-
+userSchema.plugin(findOrCreate);
+const User = new mongoose.model("User", userSchema);
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -63,7 +70,7 @@ passport.use(new GoogleStrategy({
   function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
 
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    User.findOrCreate({ googleId: profile.id,name:profile.displayName,img:profile.photos[0].value }, function (err, user) {
       return cb(err, user);
     });
   }
@@ -94,7 +101,9 @@ app.post("/postcomment/:id",async function(req,res) {
   if(comId==="") {
     const comments = new Comment({
       comment:comment,
-      userid:"@#$$4"
+      userid:req.user.googleId,
+      username:req.user.name,
+      img:req.user.img
     });
   await  Feedback.findOne({_id:fedId},function(err,result) {
       if(err)
@@ -111,7 +120,9 @@ app.post("/postcomment/:id",async function(req,res) {
   else {
     const reply = new Reply({
       reply: comment,
-      userid: "907788##"
+      userid: req.user.googleId,
+      username: req.user.name,
+      img:req.user.img
     });
   await  Feedback.findOne({_id:fedId},function(err,result) {
       if(err)
@@ -182,7 +193,9 @@ app.get("/auth/google/feed",
   passport.authenticate('google', { failureRedirect: "/login" }),
   function(req, res) {
     // Successful authentication, redirect to secrets.
-    res.redirect("/feeds");
+    res.redirect("/");
+    console.log(req.user+">?>?>?>?>?>?>");
+    console.log(req.user.name+"::::::::????????");
   });
 app.get("/uptick/:id",async function(req,res) {
   const id = req.params.id;
@@ -236,15 +249,19 @@ app.get("/reply/:stat", async function(req,res) {
     res.render("comments",{feedback:arr,reply:""+id,comment_id:comId});
 });
 app.get("/comments/:id",function(req,res) {
-  const id = req.params.id;
-  Feedback.findOne({_id:id},function(err,result) {
-    if(err)
-    console.log(err);
-    else {
-      console.log(result);
-        res.render("comments",{feedback:result,reply:"",comment_id:""});
-    }
-  });
+  if(req.isAuthenticated()) {
+    const id = req.params.id;
+    Feedback.findOne({_id:id},function(err,result) {
+      if(err)
+      console.log(err);
+      else {
+        console.log(result);
+          res.render("comments",{feedback:result,reply:"",comment_id:""});
+      }
+    });
+  }
+  else
+  res.redirect("/login");
 });
 app.get("/", function(req,res) {
    Feedback.find({}, function(err,result) {
@@ -256,10 +273,7 @@ app.get("/", function(req,res) {
   });
 });
 app.get("/feed",function(req,res) {
-  if(req.isAuthenticated())
   res.render("feedback");
-  else
-  res.redirect("/login");
 });
 app.get("/login", function(req,res) {
   res.render("login");

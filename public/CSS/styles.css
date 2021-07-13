@@ -4,6 +4,28 @@ h4 {
 p {
   font-size: 1rem;
 }
+nav {
+  height: 90px;
+}
+.navbar {
+  background: rgb(0,90,141);
+  background: -webkit-linear-gradient(left, rgba(0,90,141,1) 0%, rgba(255,150,173,1) 80%, rgba(0,212,255,1) 100%);
+  background: -o-linear-gradient(left, rgba(0,90,141,1) 0%, rgba(255,150,173,1) 80%, rgba(0,212,255,1) 100%);
+  background: linear-gradient(to right, rgba(0,90,141,1) 0%, rgba(255,150,173,1) 80%, rgba(0,212,255,1) 100%);
+  display: none;
+  z-index: 1;
+}
+.navbar-brand {
+  color: #FFF5FD;
+  margin: auto 0;
+}
+.navbar-brand:hover {
+  color: #FFF5FD;
+  text-decoration: none;
+}
+.navbar-toggler-icon {
+  /* background-color: #FFF5FD; */
+}
 /* flexbox-1 */
 .flexbox-1 {
   width: 17%;
@@ -28,7 +50,7 @@ p {
   border-radius: 8px;
   margin-bottom: 5%;
 }
-.btn {
+.first-btn {
   background: #FFF5FD;
   background-image: -webkit-linear-gradient(top, #FFF5FD, #FFF5FD);
   background-image: -moz-linear-gradient(top, #FFF5FD, #FFF5FD);
@@ -47,7 +69,7 @@ p {
   margin-bottom: 4px;
 }
 
-.btn:hover {
+.first-btn:hover {
   background: #FF96AD;
   background-image: -webkit-linear-gradient(top, #FF96AD, #FF96AD);
   background-image: -moz-linear-gradient(top, #FF96AD, #FF96AD);
@@ -154,10 +176,11 @@ select option {
   transform: translateY(-50%);
   right: 2%;
 }
-comment a {
+.comment-btn {
   color: #FFF5FD;
+  text-decoration: none;
 }
-.comment a:hover {
+.comment-btn:hover {
   color: #005A8D;
 }
 /* feedback */
@@ -233,3 +256,57 @@ comment a {
   top: 0;
   right: 2%;
 }
+.texts p {
+  display: block;
+}
+.login-btn {
+  /* position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%); */
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+@media (max-width:991px) {
+  .flexbox-1 {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 115px;
+    margin: 0 auto 1%;
+  }
+  .item-1 {
+    height: 100%;
+  }
+  .item-2 {
+    padding:0;
+  }
+  .flex-item1 {
+    margin: 0;
+  }
+  .flexbox-2 {
+    display: flex;
+    flex-direction:column;
+    margin: auto;
+  }
+}
+@media (max-width:767px) {
+  .navbar {
+    display: block;
+    margin-bottom: 5%;
+  }
+  .flexbox-1 {
+    display: none;
+  }
+  .flexbox-2 {
+    display: flex;
+    flex-direction:column;
+    width: 90%;
+    margin: auto;
+  }
+  .btn-2 {
+      padding: 3px 7px;
+  }

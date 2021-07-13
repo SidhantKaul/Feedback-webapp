@@ -17,11 +17,11 @@
     <div class="flex-item3">
       <div class="flex-item3-outer">
         <div class="comment-img">
-          <img class="comments" src="https://i.pinimg.com/originals/ce/d4/e1/ced4e117b0f2f490c79e9e820d14cd99.jpg" alt="">
+          <img class="comments" src=<%= comment.img %>>
         </div>
         <div class="texts">
-          <h4>username</h4>
-          <p>userid</p>
+          <h4><%= comment.username %></h4>
+          <p><%= comment.userid %></p>
           <p><%= comment.comment %></p>
         </div>
         <div class="reply">
@@ -32,11 +32,11 @@
     <%  comment.replies.forEach(function(reply) { %>
         <div class="reply-item3">
           <div class="comment-img">
-            <img class="comments" src="https://i.pinimg.com/originals/ce/d4/e1/ced4e117b0f2f490c79e9e820d14cd99.jpg" alt="">
+            <img class="comments" src=<%= reply.img %>>
           </div>
           <div class="texts">
-            <h4>username</h4>
-            <p>userid</p>
+            <h4><%= reply.username %></h4>
+            <p><%= reply.userid %></p>
             <p><%= reply.reply %></p>
           </div>
           <div class="reply-reply">
